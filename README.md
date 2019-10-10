@@ -7,3 +7,4 @@ Bootstrap button with spinner and FontAwesome configurable icon
 [ ] Simplify click EventEmitter  
 [ ] Add default configuration file  
 [ ] Improve style parametrization  
+[ ] Add a GIF to the README file  
