@@ -1,0 +1,29 @@
+<button *ngIf="!isLoading" (click)="onClick($event)" type="button" [class.btn-sm]="isSmall" class="btn btn-block" [ngClass]="[succeedClass, textClass]">
+    <div class="pull-left">
+        <i class="fa {{ btnIcon }}" aria-hidden="true"></i>
+    </div>
+    {{ btnText | customTranslate | async }}
+</button>
+<button *ngIf="isLoading" type="button" [ngClass]="[hasErrors ? errorClass : succeedClass, hasErrors ? 'text-white' : textClass]" [class.btn-sm]="isSmall" class="btn btn-block">
+    
+    <div *ngIf="!hasErrors && !hasSucceeded" class="pull-left">
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>            
+    </div>
+    <span *ngIf="!hasErrors && !hasSucceeded">
+      {{ 'GUARDANDO' | customTranslate | async }}...
+    </span>
+
+    <div *ngIf="hasSucceeded" class="pull-left">
+        <i class="fa fa-check" aria-hidden="true"></i>
+    </div>
+    <span *ngIf="hasSucceeded">
+      {{ 'CORRECTO' | customTranslate | async }}
+    </span>  
+
+    <div *ngIf="hasErrors" class="pull-left">
+        <b><i class="fa fa-times" aria-hidden="true"></i></b>
+    </div>
+    <span *ngIf="hasErrors">
+      {{ 'ERROR' | customTranslate | async }}
+    </span>     
+</button>
