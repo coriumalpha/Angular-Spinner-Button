@@ -1,32 +1,32 @@
-<button *ngIf="!(buttonContent.LoadingSubject | async)" type="button" [class.btn-sm]="buttonContent.IsSmall"
-	class="btn btn-block" [ngClass]="[succeedClass, textClass]">
+<button *ngIf="!showAuxiliary" type="button" [ngClass]="mainButtonClass()">
 	<div class="pull-left">
 		<i class="fa {{ buttonContent.Icon }}" aria-hidden="true"></i>
 	</div>
-	{{ buttonContent.Text | customTranslate | async }}
+	<span *ngIf="!this.buttonContent.IsOnlyIcon">
+			{{ buttonContent.Text | customTranslate | async }}
+	</span>
 </button>
-<button *ngIf="(buttonContent.LoadingSubject | async)" type="button"
-	[ngClass]="[hasErrors ? errorClass : succeedClass, hasErrors ? 'text-white' : textClass]"
-	[class.btn-sm]="buttonContent.IsSmall" class="btn btn-block">
+<button *ngIf="showAuxiliary" type="button"
+	[ngClass]="loadingButtonClass()">
 
 	<div *ngIf="!hasErrors && !hasSucceeded" class="pull-left">
 		<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
 	</div>
-	<span *ngIf="!hasErrors && !hasSucceeded">
+	<span *ngIf="!hasErrors && !hasSucceeded && !this.buttonContent.IsOnlyIcon">
 		{{ 'PROCESANDO' | customTranslate | async }}...
 	</span>
 
 	<div *ngIf="hasSucceeded" class="pull-left">
 		<i class="fa fa-check" aria-hidden="true"></i>
 	</div>
-	<span *ngIf="hasSucceeded">
+	<span *ngIf="hasSucceeded && !this.buttonContent.IsOnlyIcon">
 		{{ 'CORRECTO' | customTranslate | async }}
 	</span>
 
 	<div *ngIf="hasErrors" class="pull-left">
 		<b><i class="fa fa-times" aria-hidden="true"></i></b>
 	</div>
-	<span *ngIf="hasErrors">
+	<span *ngIf="hasErrors && !this.buttonContent.IsOnlyIcon">
 		{{ 'ERROR' | customTranslate | async }}
 	</span>
 </button>
