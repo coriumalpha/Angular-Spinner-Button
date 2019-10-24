@@ -9,5 +9,6 @@ export class LoadingButtonContent {
     public Text: string = "ACEPTAR";
     public IsSmall: boolean = false;
     public IsLight: boolean = false;
+    public IsOnlyIcon: boolean = false;
     public LoadingSubject: Subject<any> = new Subject();
 }
