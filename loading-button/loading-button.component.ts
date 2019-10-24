@@ -19,22 +19,28 @@ export class LoadingButtonComponent implements OnInit {
 	public succeedClass: string = 'btn-primary';
 	public textClass: string = 'text-white';
 
-	public btnIcon: string = "fa-floppy-o";
-	public btnText: string = "GUARDAR";
+	public btnIcon: string = 'fa-floppy-o';
+	public btnText: string = 'GUARDAR';
+
+	public showAuxiliary: boolean = false;
 
 	ngOnInit() {
 		this.configureButtonContent();
 
 		this.buttonContent.LoadingSubject.subscribe(data => {
-			if (data === false) {
+			if (data === true) {
+				this.showAuxiliary = true;
+			} else if (data === false) {
 				this.hasSucceeded = true;
 				setTimeout(x => {
 					this.hasSucceeded = false;
+					this.showAuxiliary = false;
 				}, 3000);
-			} else if (data === "error") {
+			} else if (data === 'error') {
 				this.hasErrors = true;
 				setTimeout(x => {
 					this.hasErrors = false;
+					this.showAuxiliary = false;
 				}, 4000);
 			}
 		});
@@ -55,4 +61,39 @@ export class LoadingButtonComponent implements OnInit {
 		}
 	}
 
+	private commonClass(): string[] {
+		let classes: string[] = [
+			'btn'
+		];
+
+		if (this.buttonContent.IsSmall) {
+			classes.push('btn-sm');
+		}
+
+		if (!this.buttonContent.IsOnlyIcon) {
+			classes.push('btn-block');
+		}
+
+		return classes;
+	}
+
+	public mainButtonClass(): string[] {
+		let classes: string[] = [
+			...this.commonClass(),
+			this.succeedClass,
+			this.textClass,
+		];
+
+		return classes;
+	}
+
+	public loadingButtonClass(): string[] {
+		let classes: string[] = [
+			...this.commonClass(),
+			this.hasErrors ? this.errorClass : this.succeedClass,
+			this.hasErrors ? 'text-white' : this.textClass,
+		];
+
+		return classes;
+	}
 }
